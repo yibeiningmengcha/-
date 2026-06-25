@@ -1,0 +1,96 @@
+# 中国动画电影市场全景洞察大屏 - 环境与技术栈
+# Environment & Tech Stack
+
+===============================================
+  一、运行环境 (Runtime Environment)
+===============================================
+
+Node.js: >= 18.0.0 (推荐 LTS v20.x / v22.x)
+npm: >= 9.0.0 (随 Node.js 安装)
+操作系统: Windows / macOS / Linux
+浏览器: Chrome / Edge / Firefox (现代浏览器)
+
+===============================================
+  二、核心依赖 (Core Dependencies)
+===============================================
+
+# 前端框架
+react: ^19.1.0
+react-dom: ^19.1.0
+
+# 构建工具
+vite: ^6.3.5
+@vitejs/plugin-react: ^4.4.1
+typescript: ~5.8.3
+
+# 数据可视化
+echarts: ^5.6.0
+echarts-for-react: ^3.0.2
+
+# 3D 渲染
+three: ^0.184.0
+
+# Excel 解析 (浏览器端)
+xlsx: ^0.18.5
+
+# 样式预处理
+less: ^4.2.2
+postcss: ^8.5.3
+
+# 大屏自适应
+autofit.js: ^3.2.8
+
+# 代码规范
+eslint: ^9.29.0
+@types/react: ^19.1.6
+@types/react-dom: ^19.1.2
+@types/three: ^0.184.0
+
+===============================================
+  三、数据源 (Data Sources)
+===============================================
+
+- 豆瓣电影详情参数采集_1.xlsx (1270条记录, 20+字段)
+- 艺恩-数据智能服务商_影片资料库.xlsx (379条记录)
+- 封面图素材: 37张 .webp 格式图片
+
+数据来源平台: 和鲸社区 (HeyWhale/Kesci)
+https://www.heywhale.com / https://www.kesci.com
+
+===============================================
+  四、项目结构概览
+===============================================
+
+dashboard-frontend/
+├── public/
+│   ├── data/           # Excel 数据文件
+│   └── posters/        # 封面图素材 (37张 .webp)
+├── src/
+│   ├── components/     # 可视化组件 + 二级弹窗
+│   ├── utils/          # 数据处理 + 图表配置
+│   ├── types/          # TypeScript 类型定义
+│   ├── styles/         # Less 全局样式变量
+│   ├── App.tsx         # 主应用入口
+│   └── main.tsx        # 挂载入口
+├── package.json        # 完整依赖清单
+├── tsconfig.json       # TypeScript 配置
+└── vite.config.ts      # Vite 构建配置
+
+===============================================
+  五、启动命令 (Quick Start)
+===============================================
+
+# 1. 进入项目目录和安装依赖 (首次运行)
+cd dashboard-frontend    # 进入项目目录
+# 安装依赖
+npm install
+
+# 2. 启动开发服务器
+npm run dev
+# 访问 http://localhost:5173
+
+# 3. 生产构建
+npm run build
+
+# 4. 预览构建结果
+npm run preview

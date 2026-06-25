@@ -1,0 +1,40 @@
+@import './styles/global.less';
+
+// 统一内容区域包裹层（确保KPI行与下方所有板块左边缘完全对齐）
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  // 统一水平内边距，KPI行和内容区共享同一个左边缘
+  padding: 0 @h-padding;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  gap: @gap-size;
+  // 仅保留上下内边距，左右已由 content-wrapper 统一控制
+  padding: 12px 0;
+  min-height: 0; // 关键：允许flex子项收缩
+  position: relative;
+  z-index: 10;
+
+  &__left,
+  &__right {
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+    gap: @gap-size;
+    min-height: 0;
+  }
+
+  &__center {
+    flex: 1;
+    min-width: 0;
+    min-height: 0;
+    // 必须设为flex column，让子组件能通过flex:1填满
+    display: flex;
+    flex-direction: column;
+  }
+}

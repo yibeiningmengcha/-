@@ -1,0 +1,95 @@
+.kpi-cards {
+  // 三列布局：与下方 main-content 完全对齐
+  display: flex;
+  gap: @gap-size;
+  position: relative;
+  z-index: 10;
+
+  &__left,
+  &__right {
+    width: 26%;
+    display: flex;
+    flex-direction: column;
+    gap: @gap-size;
+  }
+
+  // 中间区域：总票房和平均评分各占一半宽度，填满地球仪上方
+  &__center {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    gap: @gap-size;
+
+    &-left,
+    &-right {
+      flex: 1; // 各占一半，填满整个中心区域
+      min-width: 0;
+    }
+  }
+}
+
+.kpi-card {
+  .card-base();
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: @kpi-height;
+  position: relative;
+
+  &__icon {
+    font-size: 40px;
+    line-height: 1;
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: 14px;
+    color: #8a9bb3;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+
+  &__value {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 4px;
+  }
+
+  &__number {
+    font-size: 32px;
+    font-weight: 700;
+    font-family: 'DIN Alternate', 'Helvetica Neue', sans-serif;
+    letter-spacing: -1px;
+    text-shadow: 0 0 15px currentColor;
+  }
+
+  &__unit {
+    font-size: 16px;
+    color: #8a9bb3;
+    font-weight: 500;
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: #5a7a9b;
+    .text-ellipsis();
+  }
+
+  &__glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: @card-border-radius;
+    pointer-events: none;
+  }
+}

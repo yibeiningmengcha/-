@@ -1,0 +1,348 @@
+/* 电影详情二级弹窗 - 散点图点击触发（与评分区间弹窗同尺寸） */
+
+.movie-modal {
+  &__mask {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 8, 20, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: background 300ms ease, opacity 200ms ease;
+
+    &--visible {
+      background: rgba(0, 8, 20, 0.75);
+      opacity: 1;
+      pointer-events: auto;
+      backdrop-filter: blur(6px);
+    }
+  }
+
+  width: 1290px;
+  max-height: 85vh;
+  background: linear-gradient(145deg, rgba(10, 25, 50, 0.97), rgba(5, 15, 35, 0.98));
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 14px;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(0, 212, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transform: scale(0.92) translateY(20px);
+  opacity: 0;
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1), opacity 300ms ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &--visible {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  /* ===== 头部 ===== */
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.12);
+    flex-shrink: 0;
+  }
+
+  &__name {
+    font-size: 22px;
+    font-weight: bold;
+    color: #e0f0ff;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  &__close {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 107, 107, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 60, 60, 0.08);
+    color: #ff6b6b;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+      background: rgba(255, 60, 60, 0.2);
+      border-color: rgba(255, 107, 107, 0.6);
+      transform: scale(1.05);
+    }
+  }
+
+  /* ===== 主体 ===== */
+  &__body {
+    display: flex;
+    gap: 30px;
+    padding: 24px 28px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    flex: 1;
+
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.2); border-radius: 2px; }
+  }
+
+  /* ===== 封面图区域 ===== */
+  &__poster-wrap {
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  &__poster {
+    width: 280px;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 400ms ease;
+
+    &--loaded {
+      opacity: 1;
+    }
+  }
+
+  &__poster-skeleton {
+    width: 280px;
+    height: 420px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(0, 30, 60, 0.8), rgba(0, 15, 35, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #4a6080;
+    font-size: 14px;
+    position: absolute;
+    inset: 0;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+  }
+
+  /* ===== 右侧信息区 ===== */
+  &__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+
+  /* 评分区域 */
+  &__rating-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+  }
+
+  &__rating-label {
+    font-size: 14px;
+    color: #5a7a9b;
+    white-space: nowrap;
+  }
+
+  &__rating-value {
+    font-size: 48px;
+    font-weight: bold;
+    color: #f59e0b;
+    line-height: 1;
+    text-shadow: 0 0 24px rgba(245, 158, 11, 0.35);
+  }
+
+  &__rating-stars {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__star {
+    font-size: 24px;
+    line-height: 1;
+
+    &--full { color: #f59e0b; text-shadow: 0 0 10px rgba(245, 158, 11, 0.45); }
+    &--half {
+      color: #f59e0b;
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+      width: 1em;
+      &::after {
+        content: '\2606';
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #334155;
+        width: 50%;
+        overflow: hidden;
+      }
+    }
+    &--empty { color: #334155; }
+  }
+
+  &__rating-count {
+    font-size: 14px;
+    color: #64748b;
+    white-space: nowrap;
+  }
+
+  /* 无评分状态 */
+  &__rating-section--empty {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 16px 20px;
+    background: rgba(8, 22, 45, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.06);
+  }
+
+  &__rating-value--empty {
+    font-size: 28px;
+    color: #4a6080;
+    text-shadow: none;
+    font-weight: 600;
+  }
+
+  &__rating-hint {
+    font-size: 13px;
+    color: #3a5068;
+  }
+
+  /* 星级分布 */
+  &__star-dist {
+    background: rgba(8, 22, 45, 0.6);
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    border-radius: 10px;
+    padding: 12px 16px;
+  }
+
+  /* 元数据 */
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 18px;
+    background: rgba(8, 22, 45, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.06);
+  }
+
+  &__meta-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    line-height: 1.6;
+  }
+
+  &__meta-key {
+    font-size: 14px;
+    color: #5a7a9b;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__meta-val {
+    font-size: 15px;
+    color: #c0d0e6;
+    word-break: break-all;
+  }
+
+  /* ===== 电影详细信息区块（仿豆瓣详情页） ===== */
+  &__info-block {
+    background: rgba(8, 22, 45, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    /* 空间不足时支持纵向滚动 */
+    max-height: 200px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar { width: 3px; }
+    &::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.15); border-radius: 2px; }
+  }
+
+  &__info-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    line-height: 1.65;
+  }
+
+  &__info-label {
+    font-size: 14px;
+    color: #00d4ff;
+    white-space: nowrap;
+    flex-shrink: 0;
+    font-weight: 500;
+  }
+
+  &__info-text {
+    font-size: 14px;
+    color: #c0d0e6;
+    word-break: break-all;
+  }
+
+  /* ===== 剧情简介展示区域 ===== */
+  &__summary {
+    background: rgba(8, 22, 45, 0.5);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 212, 255, 0.08);
+    padding: 10px 16px;
+
+    &--empty {
+      text-align: center;
+      padding: 16px 20px;
+    }
+  }
+
+  &__summary-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4ade80;
+    margin: 0 0 8px 0;
+    letter-spacing: 1px;
+  }
+
+  &__summary-text {
+    font-size: 14px;
+    color: #b8c8dc;
+    line-height: 1.75;
+    margin: 0;
+    text-align: justify;
+    /* 长文本自动换行，超出区域可滚动 */
+    word-break: break-word;
+    white-space: pre-wrap;
+    max-height: 90px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar { width: 3px; }
+    &::-webkit-scrollbar-thumb { background: rgba(74, 222, 128, 0.2); border-radius: 2px; }
+  }
+
+  &__summary-empty {
+    font-size: 13px;
+    color: #4a6080;
+    margin: 0;
+  }
+}

@@ -1,0 +1,100 @@
+.news-bar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 20px;
+  background: linear-gradient(90deg, rgba(10, 14, 39, 0.95) 0%, rgba(13, 27, 62, 0.9) 50%, rgba(10, 14, 39, 0.95) 100%);
+  border-top: 1px solid rgba(0, 212, 255, 0.15);
+  position: relative;
+  z-index: 10;
+  gap: 12px;
+
+  &__icon {
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  &__label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff6b6b;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 1px;
+  }
+
+  &__scroll-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__scroll {
+    display: flex;
+    will-change: transform;
+  }
+
+  &__content {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+  }
+
+  &__item {
+    font-size: 13px;
+    color: #c0d0e6;
+    display: inline-flex;
+    align-items: center;
+
+    &::before {
+      content: '·';
+      color: @primary-cyan;
+      font-weight: bold;
+      margin-right: 8px;
+      font-size: 16px;
+    }
+  }
+
+  &__source {
+    font-size: 11px;
+    color: #4a6a8b;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__refresh {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: @primary-cyan;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-left: 16px;
+    padding-left: 16px;
+    border-left: 1px solid rgba(0, 212, 255, 0.15);
+  }
+
+  &__time {
+    font-size: 13px;
+    color: @primary-cyan;
+    font-family: 'DIN Alternate', 'Consolas', monospace;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-shadow: 0 0 8px rgba(0, 212, 255, 0.3);
+  }
+
+  &__arrow {
+    font-size: 16px;
+    color: @primary-cyan;
+    margin-left: 8px;
+    flex-shrink: 0;
+    animation: arrow-pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes arrow-pulse {
+    0%, 100% { opacity: 0.5; transform: translateX(0); }
+    50% { opacity: 1; transform: translateX(3px); }
+  }
+}

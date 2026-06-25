@@ -1,0 +1,101 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: @header-height;
+  padding: 0 30px;
+  position: relative;
+  z-index: 10;
+
+  &__title {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    background: @gradient-title;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5))
+            drop-shadow(0 0 40px rgba(0, 136, 255, 0.3));
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  &__decoration {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+
+    &--left {
+      justify-content: flex-start;
+    }
+
+    &--right {
+      justify-content: flex-end;
+      gap: 20px;
+    }
+  }
+
+  &__corner {
+    display: inline-block;
+    width: 80px;
+    height: 28px;
+    border-top: 2px solid @primary-cyan;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid @primary-cyan;
+      border-right: 2px solid @primary-cyan;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__time {
+    font-size: 16px;
+    color: #00d4ff;
+    font-family: 'Courier New', monospace;
+    font-weight: 500;
+    letter-spacing: 1px;
+    .glow-text(@primary-cyan);
+  }
+
+  &__arrow {
+    font-size: 18px;
+    color: #00d4ff;
+    margin-left: 8px;
+    animation: header-arrow-pulse 1.5s ease-in-out infinite;
+  }
+}
+
+.header__decoration--left .header__corner {
+  border-left: 2px solid @primary-cyan;
+  border-top: 2px solid @primary-cyan;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid @primary-cyan;
+    border-left: 2px solid @primary-cyan;
+    transform: rotate(-45deg);
+    right: auto;
+  }
+}
+
+@keyframes header-arrow-pulse {
+  0%, 100% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(3px); }
+}
